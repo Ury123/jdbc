@@ -1,3 +1,5 @@
+CREATE TYPE project_domain AS ENUM ('ya ne ebu kakie estь');
+
 CREATE TABLE employee (
     id UUID PRIMARY KEY,
     fio VARCHAR(255) NOT NULL,
@@ -9,7 +11,7 @@ CREATE TABLE project (
     id UUID PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(500) NOT NULL,
-    domain VARCHAR(255) NOT NULL
+    domain project_domain NOT NULL
 );
 
 CREATE TABLE employee_project (
