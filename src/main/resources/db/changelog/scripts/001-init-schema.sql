@@ -1,4 +1,4 @@
-CREATE TYPE project_domain AS ENUM ('ya ne ebu kakie estь');
+CREATE TYPE project_domain AS ENUM ('FinTech', 'MedTech', 'E-commerce', 'EdTech', 'Enterprise');
 
 CREATE TABLE employee (
     id UUID PRIMARY KEY,
