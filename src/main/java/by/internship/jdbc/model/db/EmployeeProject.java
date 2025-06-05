@@ -1,4 +1,4 @@
-package by.internship.jdbc.model;
+package by.internship.jdbc.model.db;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,25 +1,25 @@
-package by.internship.jdbc.model;
+package by.internship.jdbc.model.db;
 
+import by.internship.jdbc.model.ProjectDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee {
+public class Project {
 
     private UUID id;
 
-    private String fio;
+    private String name;
 
-    private String email;
+    private String description;
 
-    private Date startDate;
+    private ProjectDomain domain;
 
     private List<EmployeeProject> employeeProjects;
 }

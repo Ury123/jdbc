@@ -1,6 +1,6 @@
-package by.internship.jdbc.xmlEntity.wrapper;
+package by.internship.jdbc.model.xml.wrapper;
 
-import by.internship.jdbc.xmlEntity.Employee;
+import by.internship.jdbc.model.xml.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
