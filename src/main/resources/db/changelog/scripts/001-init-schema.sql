@@ -1,4 +1,4 @@
-CREATE TYPE project_domain AS ENUM ('FinTech', 'MedTech', 'E-commerce', 'EdTech', 'Enterprise');
+CREATE TYPE project_domain AS ENUM ('FINTECH', 'MEDTECH', 'RETAIL', 'EDTECH', 'ENTERPRISE');
 
 CREATE TABLE employee (
     id UUID PRIMARY KEY,
