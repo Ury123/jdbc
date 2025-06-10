@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public interface EmployeeDao {
 
-    public void save(Employee employee) throws SQLException;
-    public Optional<Employee> findById(UUID id) throws SQLException;
-    public List<Employee> findAll() throws SQLException;
-    public void delete(UUID id) throws SQLException;
+    public void save(Employee employee);
+    public Optional<Employee> findById(UUID id);
+    public List<Employee> findAll();
+    public void delete(UUID id);
 
 }

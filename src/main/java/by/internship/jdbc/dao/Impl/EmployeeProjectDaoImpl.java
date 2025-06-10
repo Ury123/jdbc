@@ -1,8 +1,8 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.EmployeeProjectDao;
-import by.internship.jdbc.model.db.Employee;
 import by.internship.jdbc.model.db.EmployeeProject;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,6 +16,18 @@ import java.util.UUID;
 
 public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
 
+    @Value("${sql.employeeProject.save}")
+    private String scripForSave;
+
+    @Value("${sql.employeeProject.findById}")
+    private String scriptForFindById;
+
+    @Value("${sql.employeeProject.findAll}")
+    private String scriptForFindAll;
+
+    @Value("${sql.employeeProject.delete}")
+    private String scriptForDelete;
+
     private final DataSource dataSource;
 
     public EmployeeProjectDaoImpl(DataSource dataSource) {
@@ -23,11 +35,10 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
     }
 
     @Override
-    public void save(EmployeeProject employeeProject) throws SQLException {
-        String sql = "INSERT INTO employee_project (id, start_date, end_date, employee_id, project_id) VALUES (?,?,?,?,?)";
+    public void save(EmployeeProject employeeProject) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(scripForSave)) {
 
             ps.setObject(1, employeeProject.getId());
             ps.setObject(2, employeeProject.getStartDate());
@@ -36,17 +47,20 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.setObject(5, employeeProject.getProject().getId());
 
             ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Optional<EmployeeProject> findById(UUID id) throws SQLException {
-        String sql = "SELECT * FROM employee_project WHERE id = ?";
+    public Optional<EmployeeProject> findById(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(scriptForFindById)) {
 
             ps.setObject(1, id);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     EmployeeProject employeeProject = new EmployeeProject();
@@ -57,18 +71,21 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
                     return Optional.of(employeeProject);
                 }
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return Optional.empty();
     }
 
     @Override
-    public List<EmployeeProject> findAll() throws SQLException {
-        String sql = "SELECT * FROM employee_project";
+    public List<EmployeeProject> findAll() {
+
         List<EmployeeProject> employeeProjects = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(scriptForFindAll)) {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -80,18 +97,24 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
                     employeeProjects.add(employeeProject);
                 }
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return employeeProjects;
     }
 
     @Override
-    public void delete(UUID id) throws SQLException {
-        String sql = "DELETE FROM employee_project WHERE id = ?";
+    public void delete(UUID id) {
+
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(scriptForDelete)) {
             ps.setObject(1, id);
             ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

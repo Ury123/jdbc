@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public interface ProjectDao {
 
-    public void save(Project project) throws SQLException;
-    public Optional<Project> findById(UUID id) throws SQLException;
-    public List<Project> findAll() throws SQLException;
-    public void delete(UUID id) throws SQLException;
+    public void save(Project project);
+    public Optional<Project> findById(UUID id);
+    public List<Project> findAll();
+    public void delete(UUID id);
 
 }
