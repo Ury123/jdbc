@@ -1,8 +1,10 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.ProjectDao;
+import by.internship.jdbc.exception.DaoException;
 import by.internship.jdbc.model.ProjectDomain;
 import by.internship.jdbc.model.db.Project;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
@@ -17,21 +19,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Repository
 @PropertySource("classpath:sql.properties")
 public class ProjectDaoImpl implements ProjectDao {
 
     @Value("${sql.project.save}")
-    private String scripForSave;
+    private String saveProjectQuery;
 
     @Value("${sql.project.findById}")
-    private String scriptForFindById;
+    private String findByIdProjectQuery;
 
     @Value("${sql.project.findAll}")
-    private String scriptForFindAll;
+    private String findAllProjectQuery;
 
     @Value("${sql.project.delete}")
-    private String scriptForDelete;
+    private String deleteProjectQuery;
 
     private final DataSource dataSource;
 
@@ -43,7 +46,7 @@ public class ProjectDaoImpl implements ProjectDao {
     public void save(Project project) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scripForSave)) {
+                PreparedStatement ps = conn.prepareStatement(saveProjectQuery)) {
 
             ps.setObject(1, project.getId());
             ps.setObject(2, project.getName());
@@ -53,7 +56,8 @@ public class ProjectDaoImpl implements ProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось сохранить проект с id {}", project.getId());
+            throw new DaoException("Не удалось сохранить проект с id "+ project.getId(), e);
         }
     }
 
@@ -61,7 +65,7 @@ public class ProjectDaoImpl implements ProjectDao {
     public Optional<Project> findById(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForFindById)) {
+                PreparedStatement ps = conn.prepareStatement(findByIdProjectQuery)) {
 
             ps.setObject(1, id);
 
@@ -79,7 +83,8 @@ public class ProjectDaoImpl implements ProjectDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось найти проект с id {}", id);
+            throw new DaoException("Не удалось найти проект с id "+ id, e);
         }
 
         return Optional.empty();
@@ -91,7 +96,7 @@ public class ProjectDaoImpl implements ProjectDao {
         List<Project> projects = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForFindAll)) {
+                PreparedStatement ps = conn.prepareStatement(findAllProjectQuery)) {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -106,7 +111,8 @@ public class ProjectDaoImpl implements ProjectDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось найти проекты");
+            throw new DaoException("Не удалось найти проекты", e);
         }
 
         return projects;
@@ -116,13 +122,14 @@ public class ProjectDaoImpl implements ProjectDao {
     public void delete(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForDelete)) {
+                PreparedStatement ps = conn.prepareStatement(deleteProjectQuery)) {
 
             ps.setObject(1, id);
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось удалить проект с id {}", id);
+            throw new DaoException("Не удалось удалить проект с id "+ id, e);
         }
     }
 }

@@ -1,7 +1,9 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.EmployeeDao;
+import by.internship.jdbc.exception.DaoException;
 import by.internship.jdbc.model.db.Employee;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
@@ -16,21 +18,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Repository
 @PropertySource("classpath:sql.properties")
 public class EmployeeDaoImpl implements EmployeeDao {
 
     @Value("${sql.employee.save}")
-    private String scripForSave;
+    private String saveEmployeeQuery;
 
     @Value("${sql.employee.findById}")
-    private String scriptForFindById;
+    private String findByIdEmployeeQuery;
 
     @Value("${sql.employee.findAll}")
-    private String scriptForFindAll;
+    private String findAllEmployeeQuery;
 
     @Value("${sql.employee.delete}")
-    private String scriptForDelete;
+    private String deleteEmployeeQuery;
 
     private final DataSource dataSource;
 
@@ -42,7 +45,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public void save(Employee employee) {
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(scripForSave)) {
+             PreparedStatement ps = conn.prepareStatement(saveEmployeeQuery)) {
 
             ps.setObject(1, employee.getId());
             ps.setObject(2, employee.getFio());
@@ -52,7 +55,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось сохранить сотрудника с id {}", employee.getId());
+            throw new DaoException("Не удалось сохранить сотрудника с id "+ employee.getId(), e);
         }
     }
 
@@ -60,7 +64,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public Optional<Employee> findById(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForFindById)) {
+                PreparedStatement ps = conn.prepareStatement(findByIdEmployeeQuery)) {
 
             ps.setObject(1, id);
 
@@ -77,7 +81,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось найти сотрудника с id {}", id);
+            throw new DaoException("Не удалось найти сотрудника с id "+ id, e);
         }
 
         return Optional.empty();
@@ -89,7 +94,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         List<Employee> employees = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForFindAll);
+                PreparedStatement ps = conn.prepareStatement(findAllEmployeeQuery);
                 ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -103,7 +108,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось найти сотрудников");
+            throw new DaoException("Не удалось найти сотрудников ", e);
         }
 
         return employees;
@@ -113,13 +119,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public void delete(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForDelete)) {
+                PreparedStatement ps = conn.prepareStatement(deleteEmployeeQuery)) {
 
             ps.setObject(1, id);
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось удалить сотрудника с id {}", id);
+            throw new DaoException("Не удалось удалить сотрудника с id "+ id, e);
         }
     }
 }

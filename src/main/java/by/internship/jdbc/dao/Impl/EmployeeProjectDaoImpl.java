@@ -1,8 +1,12 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.EmployeeProjectDao;
+import by.internship.jdbc.exception.DaoException;
 import by.internship.jdbc.model.db.EmployeeProject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,19 +18,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
+@Repository
+@PropertySource("classpath:sql.properties")
 public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
 
     @Value("${sql.employeeProject.save}")
-    private String scripForSave;
+    private String saveEmployeeProjectQuery;
 
     @Value("${sql.employeeProject.findById}")
-    private String scriptForFindById;
+    private String findByIdEmployeeProjectQuery;
 
     @Value("${sql.employeeProject.findAll}")
-    private String scriptForFindAll;
+    private String findAllEmployeeProjectQuery;
 
     @Value("${sql.employeeProject.delete}")
-    private String scriptForDelete;
+    private String deleteEmployeeProjectQuery;
 
     private final DataSource dataSource;
 
@@ -38,7 +45,7 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
     public void save(EmployeeProject employeeProject) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scripForSave)) {
+                PreparedStatement ps = conn.prepareStatement(saveEmployeeProjectQuery)) {
 
             ps.setObject(1, employeeProject.getId());
             ps.setObject(2, employeeProject.getStartDate());
@@ -49,7 +56,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось сохранить проект сотрудника с id {}", employeeProject.getId());
+            throw new DaoException("Не удалось сохранить проект сотрудника с id "+ employeeProject.getId(), e);
         }
     }
 
@@ -57,7 +65,7 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
     public Optional<EmployeeProject> findById(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForFindById)) {
+                PreparedStatement ps = conn.prepareStatement(findByIdEmployeeProjectQuery)) {
 
             ps.setObject(1, id);
 
@@ -73,7 +81,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось найти проект сотрудника с id {}", id);
+            throw new DaoException("Не удалось найти проект сотрудника с id "+ id, e);
         }
 
         return Optional.empty();
@@ -85,7 +94,7 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
         List<EmployeeProject> employeeProjects = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForFindAll)) {
+                PreparedStatement ps = conn.prepareStatement(findAllEmployeeProjectQuery)) {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -99,7 +108,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось найти проекты сотрудников");
+            throw new DaoException("Не удалось найти проекты сотрудников", e);
         }
 
         return employeeProjects;
@@ -109,12 +119,13 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
     public void delete(UUID id) {
 
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(scriptForDelete)) {
+                PreparedStatement ps = conn.prepareStatement(deleteEmployeeProjectQuery)) {
             ps.setObject(1, id);
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Не удалось удалить проект сотрудника с id {}", id);
+            throw new DaoException("Не удалось удалить проект сотрудника с id "+ id, e);
         }
     }
 }
