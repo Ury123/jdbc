@@ -1,7 +1,7 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.EmployeeProjectDao;
-import by.internship.jdbc.exception.DaoException;
+import by.internship.jdbc.exception.JdbcOperationException;
 import by.internship.jdbc.model.db.EmployeeProject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +22,11 @@ import java.util.UUID;
 @Repository
 @PropertySource("classpath:sql.properties")
 public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
+
+    private static final String FAILED_TO_SAVE_EMPLOYEE_PROJECT = "Failed to save employee project with id ";
+    private static final String FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID = "Failed to retrieve employee project with id ";
+    private static final String FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS = "Failed to retrieve all employee projects";
+    private static final String FAILED_TO_DELETE_EMPLOYEE_PROJECT = "Failed to delete employee project with id ";
 
     @Value("${sql.employeeProject.save}")
     private String saveEmployeeProjectQuery;
@@ -56,8 +61,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Не удалось сохранить проект сотрудника с id {}", employeeProject.getId());
-            throw new DaoException("Не удалось сохранить проект сотрудника с id "+ employeeProject.getId(), e);
+            log.error(FAILED_TO_SAVE_EMPLOYEE_PROJECT + employeeProject.getId());
+            throw new JdbcOperationException(FAILED_TO_SAVE_EMPLOYEE_PROJECT + employeeProject.getId(), e);
         }
     }
 
@@ -81,8 +86,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error("Не удалось найти проект сотрудника с id {}", id);
-            throw new DaoException("Не удалось найти проект сотрудника с id "+ id, e);
+            log.error(FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID + id);
+            throw new JdbcOperationException(FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID + id, e);
         }
 
         return Optional.empty();
@@ -108,8 +113,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error("Не удалось найти проекты сотрудников");
-            throw new DaoException("Не удалось найти проекты сотрудников", e);
+            log.error(FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS);
+            throw new JdbcOperationException(FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS, e);
         }
 
         return employeeProjects;
@@ -124,8 +129,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Не удалось удалить проект сотрудника с id {}", id);
-            throw new DaoException("Не удалось удалить проект сотрудника с id "+ id, e);
+            log.error(FAILED_TO_DELETE_EMPLOYEE_PROJECT + id);
+            throw new JdbcOperationException(FAILED_TO_DELETE_EMPLOYEE_PROJECT + id, e);
         }
     }
 }

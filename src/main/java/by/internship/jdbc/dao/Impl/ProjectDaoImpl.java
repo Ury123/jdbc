@@ -1,7 +1,7 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.ProjectDao;
-import by.internship.jdbc.exception.DaoException;
+import by.internship.jdbc.exception.JdbcOperationException;
 import by.internship.jdbc.model.ProjectDomain;
 import by.internship.jdbc.model.db.Project;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,11 @@ import java.util.UUID;
 @Repository
 @PropertySource("classpath:sql.properties")
 public class ProjectDaoImpl implements ProjectDao {
+
+    private static final String FAILED_TO_SAVE_PROJECT = "Failed to save project with id ";
+    private static final String FAILED_TO_FIND_PROJECT_BY_ID = "Failed to retrieve project with id ";
+    private static final String FAILED_TO_FIND_ALL_PROJECTS = "Failed to retrieve all projects";
+    private static final String FAILED_TO_DELETE_PROJECT = "Failed to delete project with id ";
 
     @Value("${sql.project.save}")
     private String saveProjectQuery;
@@ -56,8 +61,8 @@ public class ProjectDaoImpl implements ProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Не удалось сохранить проект с id {}", project.getId());
-            throw new DaoException("Не удалось сохранить проект с id "+ project.getId(), e);
+            log.error(FAILED_TO_SAVE_PROJECT + project.getId());
+            throw new JdbcOperationException(FAILED_TO_SAVE_PROJECT + project.getId(), e);
         }
     }
 
@@ -83,8 +88,8 @@ public class ProjectDaoImpl implements ProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error("Не удалось найти проект с id {}", id);
-            throw new DaoException("Не удалось найти проект с id "+ id, e);
+            log.error(FAILED_TO_FIND_PROJECT_BY_ID + id);
+            throw new JdbcOperationException(FAILED_TO_FIND_PROJECT_BY_ID + id, e);
         }
 
         return Optional.empty();
@@ -111,8 +116,8 @@ public class ProjectDaoImpl implements ProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error("Не удалось найти проекты");
-            throw new DaoException("Не удалось найти проекты", e);
+            log.error(FAILED_TO_FIND_ALL_PROJECTS);
+            throw new JdbcOperationException(FAILED_TO_FIND_ALL_PROJECTS, e);
         }
 
         return projects;
@@ -128,8 +133,8 @@ public class ProjectDaoImpl implements ProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Не удалось удалить проект с id {}", id);
-            throw new DaoException("Не удалось удалить проект с id "+ id, e);
+            log.error(FAILED_TO_DELETE_PROJECT + id);
+            throw new JdbcOperationException(FAILED_TO_DELETE_PROJECT + id, e);
         }
     }
 }

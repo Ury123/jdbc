@@ -1,7 +1,7 @@
 package by.internship.jdbc.dao.Impl;
 
 import by.internship.jdbc.dao.EmployeeDao;
-import by.internship.jdbc.exception.DaoException;
+import by.internship.jdbc.exception.JdbcOperationException;
 import by.internship.jdbc.model.db.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +22,11 @@ import java.util.UUID;
 @Repository
 @PropertySource("classpath:sql.properties")
 public class EmployeeDaoImpl implements EmployeeDao {
+
+    private static final String FAILED_TO_SAVE_EMPLOYEE = "Failed to save employee with id ";
+    private static final String FAILED_TO_FIND_EMPLOYEE_BY_ID = "Failed to retrieve employee with id ";
+    private static final String FAILED_TO_FIND_ALL_EMPLOYEES = "Failed to retrieve all employees";
+    private static final String FAILED_TO_DELETE_EMPLOYEE = "Failed to delete employee with id ";
 
     @Value("${sql.employee.save}")
     private String saveEmployeeQuery;
@@ -55,8 +60,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Не удалось сохранить сотрудника с id {}", employee.getId());
-            throw new DaoException("Не удалось сохранить сотрудника с id "+ employee.getId(), e);
+            log.error(FAILED_TO_SAVE_EMPLOYEE + employee.getId());
+            throw new JdbcOperationException(FAILED_TO_SAVE_EMPLOYEE + employee.getId(), e);
         }
     }
 
@@ -81,8 +86,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
 
         } catch (SQLException e) {
-            log.error("Не удалось найти сотрудника с id {}", id);
-            throw new DaoException("Не удалось найти сотрудника с id "+ id, e);
+            log.error(FAILED_TO_FIND_EMPLOYEE_BY_ID + id);
+            throw new JdbcOperationException(FAILED_TO_FIND_EMPLOYEE_BY_ID + id, e);
         }
 
         return Optional.empty();
@@ -108,8 +113,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
 
         } catch (SQLException e) {
-            log.error("Не удалось найти сотрудников");
-            throw new DaoException("Не удалось найти сотрудников ", e);
+            log.error(FAILED_TO_FIND_ALL_EMPLOYEES);
+            throw new JdbcOperationException(FAILED_TO_FIND_ALL_EMPLOYEES, e);
         }
 
         return employees;
@@ -125,8 +130,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Не удалось удалить сотрудника с id {}", id);
-            throw new DaoException("Не удалось удалить сотрудника с id "+ id, e);
+            log.error(FAILED_TO_DELETE_EMPLOYEE + id);
+            throw new JdbcOperationException(FAILED_TO_DELETE_EMPLOYEE + id, e);
         }
     }
 }
