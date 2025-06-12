@@ -23,10 +23,10 @@ import java.util.UUID;
 @PropertySource("classpath:sql.properties")
 public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
 
-    private static final String FAILED_TO_SAVE_EMPLOYEE_PROJECT = "Failed to save employee project with id ";
-    private static final String FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID = "Failed to retrieve employee project with id ";
-    private static final String FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS = "Failed to retrieve all employee projects";
-    private static final String FAILED_TO_DELETE_EMPLOYEE_PROJECT = "Failed to delete employee project with id ";
+    private static final String FAILED_TO_SAVE_EMPLOYEE_PROJECT_ERR_MSG = "Failed to save employee project with id ";
+    private static final String FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID_ERR_MSG = "Failed to retrieve employee project with id ";
+    private static final String FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS_ERR_MSG = "Failed to retrieve all employee projects";
+    private static final String FAILED_TO_DELETE_EMPLOYEE_PROJECT_ERR_MSG = "Failed to delete employee project with id ";
 
     @Value("${sql.employeeProject.save}")
     private String saveEmployeeProjectQuery;
@@ -61,8 +61,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_SAVE_EMPLOYEE_PROJECT + employeeProject.getId());
-            throw new JdbcOperationException(FAILED_TO_SAVE_EMPLOYEE_PROJECT + employeeProject.getId(), e);
+            log.error(FAILED_TO_SAVE_EMPLOYEE_PROJECT_ERR_MSG + employeeProject.getId());
+            throw new JdbcOperationException(FAILED_TO_SAVE_EMPLOYEE_PROJECT_ERR_MSG + employeeProject.getId(), e);
         }
     }
 
@@ -86,8 +86,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID + id);
-            throw new JdbcOperationException(FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID + id, e);
+            log.error(FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID_ERR_MSG + id);
+            throw new JdbcOperationException(FAILED_TO_FIND_EMPLOYEE_PROJECT_BY_ID_ERR_MSG + id, e);
         }
 
         return Optional.empty();
@@ -113,8 +113,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS);
-            throw new JdbcOperationException(FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS, e);
+            log.error(FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS_ERR_MSG);
+            throw new JdbcOperationException(FAILED_TO_FIND_ALL_EMPLOYEE_PROJECTS_ERR_MSG, e);
         }
 
         return employeeProjects;
@@ -129,8 +129,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_DELETE_EMPLOYEE_PROJECT + id);
-            throw new JdbcOperationException(FAILED_TO_DELETE_EMPLOYEE_PROJECT + id, e);
+            log.error(FAILED_TO_DELETE_EMPLOYEE_PROJECT_ERR_MSG + id);
+            throw new JdbcOperationException(FAILED_TO_DELETE_EMPLOYEE_PROJECT_ERR_MSG + id, e);
         }
     }
 }

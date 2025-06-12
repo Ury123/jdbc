@@ -24,10 +24,10 @@ import java.util.UUID;
 @PropertySource("classpath:sql.properties")
 public class ProjectDaoImpl implements ProjectDao {
 
-    private static final String FAILED_TO_SAVE_PROJECT = "Failed to save project with id ";
-    private static final String FAILED_TO_FIND_PROJECT_BY_ID = "Failed to retrieve project with id ";
-    private static final String FAILED_TO_FIND_ALL_PROJECTS = "Failed to retrieve all projects";
-    private static final String FAILED_TO_DELETE_PROJECT = "Failed to delete project with id ";
+    private static final String FAILED_TO_SAVE_PROJECT_ERR_MSG = "Failed to save project with id ";
+    private static final String FAILED_TO_FIND_PROJECT_BY_ID_ERR_MSG = "Failed to retrieve project with id ";
+    private static final String FAILED_TO_FIND_ALL_PROJECTS_ERR_MSG = "Failed to retrieve all projects";
+    private static final String FAILED_TO_DELETE_PROJECT_ERR_MSG = "Failed to delete project with id ";
 
     @Value("${sql.project.save}")
     private String saveProjectQuery;
@@ -61,8 +61,8 @@ public class ProjectDaoImpl implements ProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_SAVE_PROJECT + project.getId());
-            throw new JdbcOperationException(FAILED_TO_SAVE_PROJECT + project.getId(), e);
+            log.error(FAILED_TO_SAVE_PROJECT_ERR_MSG + project.getId());
+            throw new JdbcOperationException(FAILED_TO_SAVE_PROJECT_ERR_MSG + project.getId(), e);
         }
     }
 
@@ -88,8 +88,8 @@ public class ProjectDaoImpl implements ProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_FIND_PROJECT_BY_ID + id);
-            throw new JdbcOperationException(FAILED_TO_FIND_PROJECT_BY_ID + id, e);
+            log.error(FAILED_TO_FIND_PROJECT_BY_ID_ERR_MSG + id);
+            throw new JdbcOperationException(FAILED_TO_FIND_PROJECT_BY_ID_ERR_MSG + id, e);
         }
 
         return Optional.empty();
@@ -116,8 +116,8 @@ public class ProjectDaoImpl implements ProjectDao {
             }
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_FIND_ALL_PROJECTS);
-            throw new JdbcOperationException(FAILED_TO_FIND_ALL_PROJECTS, e);
+            log.error(FAILED_TO_FIND_ALL_PROJECTS_ERR_MSG);
+            throw new JdbcOperationException(FAILED_TO_FIND_ALL_PROJECTS_ERR_MSG, e);
         }
 
         return projects;
@@ -133,8 +133,8 @@ public class ProjectDaoImpl implements ProjectDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_DELETE_PROJECT + id);
-            throw new JdbcOperationException(FAILED_TO_DELETE_PROJECT + id, e);
+            log.error(FAILED_TO_DELETE_PROJECT_ERR_MSG + id);
+            throw new JdbcOperationException(FAILED_TO_DELETE_PROJECT_ERR_MSG + id, e);
         }
     }
 }

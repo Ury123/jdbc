@@ -23,10 +23,10 @@ import java.util.UUID;
 @PropertySource("classpath:sql.properties")
 public class EmployeeDaoImpl implements EmployeeDao {
 
-    private static final String FAILED_TO_SAVE_EMPLOYEE = "Failed to save employee with id ";
-    private static final String FAILED_TO_FIND_EMPLOYEE_BY_ID = "Failed to retrieve employee with id ";
-    private static final String FAILED_TO_FIND_ALL_EMPLOYEES = "Failed to retrieve all employees";
-    private static final String FAILED_TO_DELETE_EMPLOYEE = "Failed to delete employee with id ";
+    private static final String FAILED_TO_SAVE_EMPLOYEE_ERR_MSG = "Failed to save employee with id ";
+    private static final String FAILED_TO_FIND_EMPLOYEE_BY_ID_ERR_MSG = "Failed to retrieve employee with id ";
+    private static final String FAILED_TO_FIND_ALL_EMPLOYEES_ERR_MSG = "Failed to retrieve all employees";
+    private static final String FAILED_TO_DELETE_EMPLOYEE_ERR_MSG = "Failed to delete employee with id ";
 
     @Value("${sql.employee.save}")
     private String saveEmployeeQuery;
@@ -60,8 +60,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_SAVE_EMPLOYEE + employee.getId());
-            throw new JdbcOperationException(FAILED_TO_SAVE_EMPLOYEE + employee.getId(), e);
+            log.error(FAILED_TO_SAVE_EMPLOYEE_ERR_MSG + employee.getId());
+            throw new JdbcOperationException(FAILED_TO_SAVE_EMPLOYEE_ERR_MSG + employee.getId(), e);
         }
     }
 
@@ -86,8 +86,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_FIND_EMPLOYEE_BY_ID + id);
-            throw new JdbcOperationException(FAILED_TO_FIND_EMPLOYEE_BY_ID + id, e);
+            log.error(FAILED_TO_FIND_EMPLOYEE_BY_ID_ERR_MSG + id);
+            throw new JdbcOperationException(FAILED_TO_FIND_EMPLOYEE_BY_ID_ERR_MSG + id, e);
         }
 
         return Optional.empty();
@@ -113,8 +113,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_FIND_ALL_EMPLOYEES);
-            throw new JdbcOperationException(FAILED_TO_FIND_ALL_EMPLOYEES, e);
+            log.error(FAILED_TO_FIND_ALL_EMPLOYEES_ERR_MSG);
+            throw new JdbcOperationException(FAILED_TO_FIND_ALL_EMPLOYEES_ERR_MSG, e);
         }
 
         return employees;
@@ -130,8 +130,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            log.error(FAILED_TO_DELETE_EMPLOYEE + id);
-            throw new JdbcOperationException(FAILED_TO_DELETE_EMPLOYEE + id, e);
+            log.error(FAILED_TO_DELETE_EMPLOYEE_ERR_MSG + id);
+            throw new JdbcOperationException(FAILED_TO_DELETE_EMPLOYEE_ERR_MSG + id, e);
         }
     }
 }
