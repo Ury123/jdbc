@@ -1,6 +1,6 @@
 package by.internship.jdbc.xml.Impl;
 
-import by.internship.jdbc.exception.XmlException;
+import by.internship.jdbc.exception.XmlOperationException;
 import by.internship.jdbc.xml.Reader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.io.File;
 
 @Slf4j
 @Component
-public class ReaderImp implements Reader {
+public class ReaderImpl implements Reader {
 
     private static final String READER_ERR_MSG = "Failed to read XML file";
 
@@ -27,7 +27,7 @@ public class ReaderImp implements Reader {
 
         } catch (JAXBException e) {
             log.error(READER_ERR_MSG, e);
-            throw new XmlException(READER_ERR_MSG, e);
+            throw new XmlOperationException(READER_ERR_MSG, e);
         }
     }
 }
