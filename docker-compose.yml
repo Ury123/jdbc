@@ -1,0 +1,16 @@
+version: '3.9'
+
+volumes:
+  jdbc:
+
+services:
+  database:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - jdbc:/var/lib/postgresql/data
