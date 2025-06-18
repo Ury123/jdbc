@@ -16,7 +16,7 @@ public class WriterImpl implements Writer {
     private static final String WRITER_ERR_MSG = "Failed to write xml to file";
 
     @Override
-    public  <T> void writeToXml(T object, Class<T> clazz, String filePath) {
+    public <T> void writeToXml(T object, Class<T> clazz, String filePath) {
 
         try {
             JAXBContext context = JAXBContext.newInstance(clazz);
@@ -29,6 +29,5 @@ public class WriterImpl implements Writer {
             log.error(WRITER_ERR_MSG, e);
             throw new RuntimeException(WRITER_ERR_MSG, e);
         }
-
     }
 }
