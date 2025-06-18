@@ -1,0 +1,27 @@
+version: '3.9'
+
+volumes:
+  jdbc:
+
+services:
+  database:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - jdbc:/var/lib/postgresql/data
+  app:
+    depends_on:
+      - database
+    image: openjdk:17-jdk-slim
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
