@@ -9,7 +9,17 @@
                             <xs:element name="id" type="xs:string"/>
                             <xs:element name="name" type="xs:string"/>
                             <xs:element name="description" type="xs:string"/>
-                            <xs:element name="domain" type="xs:string"/>
+                            <xs:element name="domain">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="fintech"/>
+                                        <xs:enumeration value="medtech"/>
+                                        <xs:enumeration value="retail"/>
+                                        <xs:enumeration value="edtech"/>
+                                        <xs:enumeration value="enterprise"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
