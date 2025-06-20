@@ -20,8 +20,8 @@ import java.util.UUID;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EmployeeProject {
 
-    @XmlElement(name = "id")
-    private UUID id;
+    @XmlElement(name = "project_id")
+    private UUID projectId;
 
     @XmlElement(name = "start_date")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -31,10 +31,5 @@ public class EmployeeProject {
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate endDate;
 
-    @XmlElement(name = "project")
-    private Project project;
-
-    @XmlTransient
-    private Employee employee;
 }
 

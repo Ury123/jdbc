@@ -30,8 +30,5 @@ public class Project {
 
     @XmlElement(name = "domain")
     private ProjectDomain domain;
-
-    @XmlTransient
-    private List<EmployeeProject> employeeProjects;
 }
 
