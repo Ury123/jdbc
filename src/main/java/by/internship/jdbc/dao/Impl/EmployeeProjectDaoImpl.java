@@ -55,8 +55,10 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
             ps.setObject(1, employeeProject.getId());
             ps.setObject(2, employeeProject.getStartDate());
             ps.setObject(3, employeeProject.getEndDate());
-            ps.setObject(4, employeeProject.getEmployee().getId());
-            ps.setObject(5, employeeProject.getProject().getId());
+            ps.setObject(4, employeeProject.getCreatedAt());
+            ps.setObject(5, employeeProject.getUpdatedAt());
+            ps.setObject(6, employeeProject.getEmployee().getId());
+            ps.setObject(7, employeeProject.getProject().getId());
 
             ps.executeUpdate();
 
@@ -80,6 +82,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
                     employeeProject.setId(id);
                     employeeProject.setStartDate(rs.getDate("start_date").toLocalDate());
                     employeeProject.setEndDate(rs.getDate("end_date").toLocalDate());
+                    employeeProject.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                    employeeProject.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 
                     return Optional.of(employeeProject);
                 }
@@ -107,6 +111,8 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
                     employeeProject.setId(UUID.fromString(rs.getString("id")));
                     employeeProject.setStartDate(rs.getDate("start_date").toLocalDate());
                     employeeProject.setEndDate(rs.getDate("end_date").toLocalDate());
+                    employeeProject.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                    employeeProject.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 
                     employeeProjects.add(employeeProject);
                 }

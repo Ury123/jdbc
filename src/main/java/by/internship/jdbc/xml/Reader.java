@@ -2,6 +2,6 @@ package by.internship.jdbc.xml;
 
 public interface Reader {
 
-    <T> T readFromXml (Class<T> clazz, String filePath);
+    <T> T readFromXml (Class<T> clazz, String filePath, String xsdPath);
 
 }

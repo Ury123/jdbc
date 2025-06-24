@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +19,10 @@ public class EmployeeProject {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
     private Employee employee;
 

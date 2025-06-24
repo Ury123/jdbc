@@ -1,6 +1,7 @@
 package by.internship.jdbc.model.xml;
 
 import by.internship.jdbc.model.adapter.LocalDateAdapter;
+import by.internship.jdbc.model.adapter.LocalDateTimeAdapter;
 import by.internship.jdbc.model.db.EmployeeProject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +36,14 @@ public class Employee {
     @XmlElement(name = "start_date")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate startDate;
+
+    @XmlElement(name = "created_at")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime createdAt;
+
+    @XmlElement(name = "updated_at")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime updatedAt;
 
     @XmlElementWrapper(name = "employee_projects")
     @XmlElement(name = "employee_project")
