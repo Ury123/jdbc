@@ -1,11 +1,13 @@
 package by.internship.jdbc.mapper;
 
+import by.internship.jdbc.model.db.Employee;
+import by.internship.jdbc.model.xml.XmlEmployee;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {EmployeeProjectMapper.class})
 public interface EmployeeMapper {
 
-    by.internship.jdbc.model.db.Employee toDb(by.internship.jdbc.model.xml.Employee employee);
-    by.internship.jdbc.model.xml.Employee toXml(by.internship.jdbc.model.db.Employee employee);
+    Employee toDb(XmlEmployee employee);
+    XmlEmployee toXml(Employee employee);
 
 }

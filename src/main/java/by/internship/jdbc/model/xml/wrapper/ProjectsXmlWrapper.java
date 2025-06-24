@@ -1,6 +1,6 @@
 package by.internship.jdbc.model.xml.wrapper;
 
-import by.internship.jdbc.model.xml.Project;
+import by.internship.jdbc.model.xml.XmlProject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +20,6 @@ import java.util.List;
 public class ProjectsXmlWrapper {
 
     @XmlElement(name = "project")
-    private List<Project> projects = new ArrayList<>();
+    private List<XmlProject> projects = new ArrayList<>();
 }
 

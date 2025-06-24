@@ -1,5 +1,7 @@
 package by.internship.jdbc.mapper;
 
+import by.internship.jdbc.model.db.EmployeeProject;
+import by.internship.jdbc.model.xml.XmlEmployeeProject;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -7,9 +9,9 @@ import org.mapstruct.Mapping;
 public interface EmployeeProjectMapper {
 
     @Mapping(source = "projectId", target = "project.id")
-    by.internship.jdbc.model.db.EmployeeProject toDb(by.internship.jdbc.model.xml.EmployeeProject employeeProject);
+    EmployeeProject toDb(XmlEmployeeProject employeeProject);
 
     @Mapping(source = "project.id", target = "projectId")
-    by.internship.jdbc.model.xml.EmployeeProject toXml(by.internship.jdbc.model.db.EmployeeProject employeeProject);
+    XmlEmployeeProject toXml(EmployeeProject employeeProject);
 
 }

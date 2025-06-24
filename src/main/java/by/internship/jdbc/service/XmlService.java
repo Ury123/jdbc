@@ -1,16 +1,16 @@
 package by.internship.jdbc.service;
 
-import by.internship.jdbc.model.xml.Employee;
-import by.internship.jdbc.model.xml.Project;
+import by.internship.jdbc.model.xml.XmlEmployee;
+import by.internship.jdbc.model.xml.XmlProject;
 
 import java.util.List;
 
 public interface XmlService {
 
-    List<Employee> readEmployees (String xmlPath, String xsdPath);
-    List<Project> readProjects (String xmlPath, String xsdPath);
+    List<XmlEmployee> readEmployees (String xmlPath, String xsdPath);
+    List<XmlProject> readProjects (String xmlPath, String xsdPath);
 
-    void writeEmployees (String xmlPath, List<Employee> employees);
-    void writeProjects (String xmlPath, List<Project> projects);
+    void writeEmployees (String xmlPath, List<XmlEmployee> employees);
+    void writeProjects (String xmlPath, List<XmlProject> projects);
 
 }
