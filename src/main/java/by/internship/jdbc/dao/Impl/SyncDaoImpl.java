@@ -44,7 +44,8 @@ public class SyncDaoImpl implements SyncDao {
             if (rs.next()) {
                 SyncInfo syncInfo = new SyncInfo();
                 syncInfo.setId(UUID.fromString(rs.getString("id")));
-                syncInfo.setLastSync(rs.getTimestamp("last_sync").toLocalDateTime());
+                syncInfo.setLastSyncDateTime(rs.getTimestamp("last_sync_date_time").toLocalDateTime());
+                syncInfo.setUpdatedRows(rs.getInt("updated_rows"));
                 return Optional.of(syncInfo);
             }
         } catch (SQLException e) {
@@ -62,7 +63,8 @@ public class SyncDaoImpl implements SyncDao {
              PreparedStatement ps = connection.prepareStatement(updateLastSyncQuery)) {
 
             ps.setObject(1, syncInfo.getId());
-            ps.setObject(2, Timestamp.valueOf(syncInfo.getLastSync()));
+            ps.setObject(2, Timestamp.valueOf(syncInfo.getLastSyncDateTime()));
+            ps.setObject(3, syncInfo.getUpdatedRows());
             ps.executeUpdate();
 
         } catch (SQLException e) {

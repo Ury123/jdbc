@@ -30,7 +30,8 @@ CREATE TABLE employee_project (
 
 CREATE TABLE sync_info (
     id UUID PRIMARY KEY,
-    last_sync TIMESTAMP
+    last_sync_date_time TIMESTAMP,
+    updated_rows INTEGER NOT NULL
 );
 
 ALTER TABLE employee

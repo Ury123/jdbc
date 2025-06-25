@@ -14,6 +14,8 @@ public class SyncInfo {
 
     private UUID id;
 
-    private LocalDateTime lastSync;
+    private LocalDateTime lastSyncDateTime;
+
+    private Integer updatedRows;
 
 }
