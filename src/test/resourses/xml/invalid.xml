@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects>
+    <project>
+        <id>550e8400-e29b-41d4-a716-446655440000</id>
+        <name>Project Alpha</name>
+        <description>Internal banking system for fintech operations</description>
+        <domain>aaa</domain>
+        <created_at>2023-11-01T10:15:30</created_at>
+        <updated_at>2023-12-01T08:20:45</updated_at>
+    </project>
+    <project>
+        <id>660e8400-e29b-41d4-a716-446655440001</id>
+        <name>Health Insight</name>
+        <description>Analytics for medtech devices</description>
+        <domain>medtech</domain>
+        <created_at>2024-01-15T14:00:00</created_at>
+        <updated_at>2024-01-20T12:45:00</updated_at>
+    </project>
+</projects>

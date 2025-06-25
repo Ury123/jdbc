@@ -10,9 +10,11 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.io.InputStream;
 
 @Slf4j
 @Component
@@ -30,7 +32,11 @@ public class ReaderImpl implements Reader {
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new File(xsdPath));
+
+            InputStream xsdStream = getClass().getClassLoader().getResourceAsStream(xsdPath);
+
+            Schema schema = schemaFactory.newSchema(new StreamSource(xsdStream));
+
             unmarshaller.setSchema(schema);
 
             unmarshaller.setEventHandler(event -> {
@@ -38,7 +44,9 @@ public class ReaderImpl implements Reader {
                 return false;
             });
 
-            return (T) unmarshaller.unmarshal(new File(filePath));
+            InputStream xmlStream = getClass().getClassLoader().getResourceAsStream(filePath);
+
+            return (T) unmarshaller.unmarshal(xmlStream);
 
         } catch (JAXBException e) {
             log.error(READER_ERR_MSG, e);
