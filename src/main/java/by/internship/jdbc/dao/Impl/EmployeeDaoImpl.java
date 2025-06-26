@@ -56,6 +56,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.setObject(2, employee.getFio());
             ps.setObject(3, employee.getEmail());
             ps.setObject(4, employee.getStartDate());
+            ps.setObject(5, employee.getCreatedAt());
+            ps.setObject(6, employee.getUpdatedAt());
 
             ps.executeUpdate();
 
@@ -80,6 +82,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     employee.setFio(rs.getString("fio"));
                     employee.setEmail(rs.getString("email"));
                     employee.setStartDate(rs.getDate("start_date").toLocalDate());
+                    employee.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                    employee.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
                     employee.setEmployeeProjects(new ArrayList<>());
                     return Optional.of(employee);
                 }
@@ -108,6 +112,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 employee.setFio(rs.getString("fio"));
                 employee.setEmail(rs.getString("email"));
                 employee.setStartDate(rs.getDate("start_date").toLocalDate());
+                employee.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                employee.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
                 employee.setEmployeeProjects(new ArrayList<>());
                 employees.add(employee);
             }

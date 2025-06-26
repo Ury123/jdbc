@@ -57,6 +57,8 @@ public class ProjectDaoImpl implements ProjectDao {
             ps.setObject(2, project.getName());
             ps.setObject(3, project.getDescription());
             ps.setObject(4, project.getDomain());
+            ps.setObject(5, project.getCreatedAt());
+            ps.setObject(6, project.getUpdatedAt());
 
             ps.executeUpdate();
 
@@ -81,6 +83,8 @@ public class ProjectDaoImpl implements ProjectDao {
                     project.setName(rs.getString("name"));
                     project.setDescription(rs.getString("description"));
                     project.setDomain(ProjectDomain.valueOf(rs.getString("domain")));
+                    project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                    project.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
                     project.setEmployeeProjects(new ArrayList<>());
 
                     return Optional.of(project);
@@ -110,6 +114,8 @@ public class ProjectDaoImpl implements ProjectDao {
                     project.setName(rs.getString("name"));
                     project.setDescription(rs.getString("description"));
                     project.setDomain(ProjectDomain.valueOf(rs.getString("domain")));
+                    project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                    project.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
                     project.setEmployeeProjects(new ArrayList<>());
                     projects.add(project);
                 }

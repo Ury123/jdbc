@@ -3,7 +3,7 @@
     <xs:element name="projects">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="project">
+                <xs:element name="project" maxOccurs="unbounded" minOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="id" type="xs:string"/>

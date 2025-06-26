@@ -1,6 +1,6 @@
 package by.internship.jdbc.model.xml.wrapper;
 
-import by.internship.jdbc.model.xml.Employee;
+import by.internship.jdbc.model.xml.XmlEmployee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +20,6 @@ import java.util.List;
 public class EmployeesXmlWrapper {
 
     @XmlElement(name = "employee")
-    private List<Employee> employees = new ArrayList<>();
+    private List<XmlEmployee> employees = new ArrayList<>();
 }
 
