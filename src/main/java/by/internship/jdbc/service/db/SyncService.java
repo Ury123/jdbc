@@ -1,4 +1,4 @@
-package by.internship.jdbc.service;
+package by.internship.jdbc.service.db;
 
 import by.internship.jdbc.model.db.SyncInfo;
 

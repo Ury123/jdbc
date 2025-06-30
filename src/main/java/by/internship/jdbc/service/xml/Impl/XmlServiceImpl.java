@@ -1,16 +1,18 @@
-package by.internship.jdbc.service.Impl;
+package by.internship.jdbc.service.xml.Impl;
 
 import by.internship.jdbc.model.xml.XmlEmployee;
 import by.internship.jdbc.model.xml.XmlProject;
 import by.internship.jdbc.model.xml.wrapper.EmployeesXmlWrapper;
 import by.internship.jdbc.model.xml.wrapper.ProjectsXmlWrapper;
-import by.internship.jdbc.service.XmlService;
+import by.internship.jdbc.service.xml.XmlService;
 import by.internship.jdbc.xml.Reader;
 import by.internship.jdbc.xml.Writer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class XmlServiceImpl implements XmlService {
 

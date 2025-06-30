@@ -3,7 +3,7 @@
     <xs:element name="employees">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="employee">
+                <xs:element name="employee" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="id" type="xs:string"/>
@@ -29,10 +29,12 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-                            <xs:element name="projects">
+                            <xs:element name="created_at" type="xs:string"/>
+                            <xs:element name="updated_at" type="xs:string"/>
+                            <xs:element name="employee_projects">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="project">
+                                        <xs:element name="employee_project" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element name="project_id" type="xs:string"/>
@@ -50,6 +52,8 @@
                                                             </xs:restriction>
                                                         </xs:simpleType>
                                                     </xs:element>
+                                                    <xs:element name="created_at" type="xs:string"/>
+                                                    <xs:element name="updated_at" type="xs:string"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>

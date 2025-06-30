@@ -46,6 +46,6 @@ public class XmlEmployee {
 
     @XmlElementWrapper(name = "employee_projects")
     @XmlElement(name = "employee_project")
-    private List<EmployeeProject> employeeProjects;
+    private List<XmlEmployeeProject> employeeProjects;
 }
 

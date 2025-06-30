@@ -1,10 +1,9 @@
-package by.internship.jdbc.service.Impl;
+package by.internship.jdbc.service.db.Impl;
 
 import by.internship.jdbc.dao.ProjectDao;
 import by.internship.jdbc.exception.EntityNotFoundException;
-import by.internship.jdbc.model.db.Employee;
 import by.internship.jdbc.model.db.Project;
-import by.internship.jdbc.service.ProjectService;
+import by.internship.jdbc.service.db.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
