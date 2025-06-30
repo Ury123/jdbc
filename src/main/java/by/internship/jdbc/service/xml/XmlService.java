@@ -1,4 +1,4 @@
-package by.internship.jdbc.service;
+package by.internship.jdbc.service.xml;
 
 import by.internship.jdbc.model.xml.XmlEmployee;
 import by.internship.jdbc.model.xml.XmlProject;

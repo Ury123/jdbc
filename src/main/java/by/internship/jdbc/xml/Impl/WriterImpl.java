@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 @Slf4j
 @Component
@@ -23,6 +25,7 @@ public class WriterImpl implements Writer {
             Marshaller marshaller = context.createMarshaller();
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
             marshaller.marshal(object, new File(filePath));
 
         } catch (JAXBException e) {

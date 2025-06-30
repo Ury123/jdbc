@@ -1,8 +1,8 @@
-package by.internship.jdbc.service.Impl;
+package by.internship.jdbc.service.db.Impl;
 
 import by.internship.jdbc.dao.SyncDao;
 import by.internship.jdbc.model.db.SyncInfo;
-import by.internship.jdbc.service.SyncService;
+import by.internship.jdbc.service.db.SyncService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

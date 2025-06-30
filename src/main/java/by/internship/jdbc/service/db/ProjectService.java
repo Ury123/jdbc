@@ -1,6 +1,5 @@
-package by.internship.jdbc.service;
+package by.internship.jdbc.service.db;
 
-import by.internship.jdbc.model.db.Employee;
 import by.internship.jdbc.model.db.Project;
 
 import java.util.List;
